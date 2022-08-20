@@ -119,7 +119,7 @@ if __name__ == "__main__":
                         shutil.copyfile(generated_f, copied_f)
 
         # Move -uninstalled.pc to meson-uninstalled
-        uninstalled = opts.build_dir / 'meson-uninstalled'
+        uninstalled = opts.root_dir / 'meson-uninstalled'
         if not uninstalled.exists():
             os.mkdir(uninstalled)
 
