@@ -1,0 +1,16 @@
+[package]
+name = "rdylib"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name         = "rdylib"
+#crate-type   = ["rlib", "cdylib", "staticlib"]
+
+[features]
+capi=[]
+staticlib=[]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
