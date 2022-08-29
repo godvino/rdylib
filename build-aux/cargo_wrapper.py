@@ -40,6 +40,8 @@ if __name__ == "__main__":
     pkg_config_path.append(str(opts.root_dir / 'meson-uninstalled'))
     env['PKG_CONFIG_PATH'] = ':'.join(pkg_config_path)
 
+    env['CARGO_HOME'] = str(opts.build_dir / 'cargo-home')
+
     for e in opts.extra_env_vars:
         k, v = e.split(':')
         env[k] = v
