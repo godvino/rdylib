@@ -45,7 +45,7 @@ if __name__ == "__main__":
         env[k] = v
 
     if opts.command == 'build':
-        cargo_cmd = ['cargo', 'cbuild']
+        cargo_cmd = ['cargo', 'build']
         if opts.build_type == 'release':
             cargo_cmd.append('--release')
     elif opts.command == 'test':
@@ -56,7 +56,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     cargo_cmd.extend(['--manifest-path', opts.source_dir / 'Cargo.toml'])
-    cargo_cmd.extend(['--prefix', opts.prefix, '--libdir', opts.prefix / opts.libdir])
+    #cargo_cmd.extend(['--prefix', opts.prefix, '--libdir', opts.prefix / opts.libdir])
 
     def run(cargo_cmd, env):
         try:
@@ -83,14 +83,14 @@ if __name__ == "__main__":
                                               f"{str(opts.build_dir / libfile.name)}:")
                     depfile_content += f"{content}\n"
                 shutil.copy(f, opts.build_dir)
-                shutil.copy(f, opts.build_dir / f'{P(f).name}.0')
+                #shutil.copy(f, opts.build_dir / f'{P(f).name}.0')
 
         with open(opts.depfile, 'w') as depfile:
             depfile.write(depfile_content)
 
         # Copy generated pkg-config files
-        for f in glob.glob(str(target_dir / '*.pc'), recursive=True):
-            shutil.copy(f, opts.build_dir)
+#        for f in glob.glob(str(target_dir / '*.pc'), recursive=True):
+#            shutil.copy(f, opts.build_dir)
 
         for include in opts.include_directories:
             include_dirs = target_dir / 'include' / f'{include}'
@@ -119,13 +119,13 @@ if __name__ == "__main__":
                         shutil.copyfile(generated_f, copied_f)
 
         # Move -uninstalled.pc to meson-uninstalled
-        uninstalled = opts.root_dir / 'meson-uninstalled'
-        if not uninstalled.exists():
-            os.mkdir(uninstalled)
+        # uninstalled = opts.root_dir / 'meson-uninstalled'
+        # if not uninstalled.exists():
+        #     os.mkdir(uninstalled)
 
-        for f in glob.glob(str(opts.build_dir / '*-uninstalled.pc')):
+        # for f in glob.glob(str(opts.build_dir / '*-uninstalled.pc')):
             # move() does not allow us to update the file so remove it if it already exists
-            dest = uninstalled / P(f).name
-            if dest.exists():
-                dest.unlink()
-            shutil.move(f, uninstalled)
+        #     dest = uninstalled / P(f).name
+        #     if dest.exists():
+        #         dest.unlink()
+        #     shutil.move(f, uninstalled)

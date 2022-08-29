@@ -10,44 +10,31 @@ else
   target = 'release'
 endif
 
+pkgconfig = import('pkgconfig')
+
 cargo = find_program('cargo', version:'>=1.40')
 rustc = find_program('rustc', version:'>=1.52')
 
-system = build_machine.system()
-if system == 'windows'
-  ext_dynamic = 'dll'
-  ext_static = 'lib'
-elif system == 'darwin'
-  ext_dynamic = 'dylib'
-  ext_static = 'a'
-else
-  ext_dynamic = 'so'
-  ext_static = 'a'
-endif
+gobject_dep = dependency('gobject-2.0')
 
 output = []
-extensions = []
 
-if get_option('default_library') == 'shared' or get_option('default_library') == 'both'
-extensions += [ext_dynamic]
-output += ['lib' + meson.project_name() + '.' + ext_dynamic]
+system = build_machine.system()
+extension = 'a'
+if system == 'windows'
+  extension = 'lib'
 endif
 
-if get_option('default_library') == 'static' or get_option('default_library') == 'both'
-extensions += [ext_static]
-  if get_option('default_library') != 'both'
-    output += ['lib' + meson.project_name() + '.' + ext_static]
-  endif
-endif
+output += ['lib' + meson.project_name() + '.' + extension]
 
 cargo_wrapper = find_program('build-aux/cargo_wrapper.py')
 
-rdylib_lib = custom_target('rdylib',
+rdylib_lib = custom_target('rdylib.tmp',
   build_by_default: true,
   build_always_stale: true,
   output: output,
   console: true,
-  install: true,
+  #install: true,
   install_dir: get_option('libdir'),
   #depends: depends,
   depfile: 'rdylib.dep',
@@ -62,14 +49,25 @@ rdylib_lib = custom_target('rdylib',
   '--libdir', get_option('libdir'),
   '--local-include-dir', 'include',
   '--depfile', '@DEPFILE@',
-  '--exts', extensions
+  '--exts', extension
   ])
 
 install_headers('include/rdylib.h', subdir: 'rdylib')
 rdylibinc = include_directories('include')
 
-d = declare_dependency(link_with: rdylib_lib, include_directories: [rdylibinc])
+lib = library('rdylib',
+  link_whole: rdylib_lib,
+  install: true,
+   dependencies: [
+     gobject_dep,
+   ],
+  )
 
-meson.override_dependency('rdylib', d)
+pkgconfig.generate(lib,
+  subdirs: 'rdylib'
+  )
 
-#executable ('main', 'main.c', dependencies: [d])
+rdylib_dep = declare_dependency(link_with: lib, include_directories: [rdylibinc])
+meson.override_dependency('rdylib', rdylib_dep)
+
+executable ('main', 'main.c', dependencies: [rdylib_dep])
