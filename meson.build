@@ -27,6 +27,11 @@ endif
 
 output += ['lib' + meson.project_name() + '.' + extension]
 
+buildtype = 'native'
+if meson.is_cross_build()
+  buildtype = 'cross'
+endif
+
 cargo_wrapper = find_program('build-aux/cargo_wrapper.py')
 
 rdylib_lib = custom_target('rdylib.tmp',
@@ -49,7 +54,8 @@ rdylib_lib = custom_target('rdylib.tmp',
   '--libdir', get_option('libdir'),
   '--local-include-dir', 'include',
   '--depfile', '@DEPFILE@',
-  '--exts', extension
+  '--exts', extension,
+  '--buildtype', buildtype
   ])
 
 install_headers('include/rdylib.h', subdir: 'rdylib')

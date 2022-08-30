@@ -23,6 +23,7 @@ PARSER.add_argument('--version', default=None)
 PARSER.add_argument('--local-include-dir', default=None)
 PARSER.add_argument('--exts', nargs="+", default=[])
 PARSER.add_argument('--depfile')
+PARSER.add_argument('--buildtype')
 
 if __name__ == "__main__":
     opts = PARSER.parse_args()
@@ -45,6 +46,9 @@ if __name__ == "__main__":
     for e in opts.extra_env_vars:
         k, v = e.split(':')
         env[k] = v
+
+    if  opts.buildtype == 'cross':
+        env['PKG_CONFIG_ALLOW_CROSS'] = '1'
 
     if opts.command == 'build':
         cargo_cmd = ['cargo', 'build']
