@@ -62,18 +62,12 @@ install_headers('include/rdylib.h', subdir: 'rdylib')
 rdylibinc = include_directories('include')
 
 cc = meson.get_compiler('c')
-winsock2 = cc.find_library('ws2_32')
-userenv = cc.find_library('userenv')
-bcrypt = cc.find_library('bcrypt')
 
 lib = library('rdylib',
   link_whole: rdylib_lib,
   install: true,
    dependencies: [
      gobject_dep,
- #    winsock2,
-#     userenv,
-#     bcrypt,
    ],
   )
 
