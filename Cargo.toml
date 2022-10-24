@@ -20,4 +20,4 @@ lto = true
 #enabled = false
 
 [dependencies]
-glib = "0.15.12"
+glib = "0.16.2"
