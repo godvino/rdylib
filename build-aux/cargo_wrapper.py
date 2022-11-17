@@ -71,7 +71,8 @@ if __name__ == "__main__":
                 content = content.replace(f"{str(libfile)}:",
                                           f"{str(opts.build_dir / libfile.name)}:")
                 depfile_content += f"{content}\n"
-            shutil.move(f, opts.build_dir)
+            shutil.copy(f, opts.build_dir)
+            os.remove(f)
 
         with open(opts.depfile, 'w') as depfile:
             depfile.write(depfile_content)
