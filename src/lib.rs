@@ -39,7 +39,7 @@ mod imp {
     //     fn properties() -> &'static [glib::ParamSpec] {
     //     }
 
-fn set_property(&self, _obj: &Self::Type, _id: usize, _value: &glib::Value, pspec: &glib::ParamSpec) {
+fn set_property(&self, _id: usize, _value: &glib::Value, pspec: &glib::ParamSpec) {
             match pspec.name() {
                 _ => unimplemented!(),
             }
@@ -47,17 +47,17 @@ fn set_property(&self, _obj: &Self::Type, _id: usize, _value: &glib::Value, pspe
 
         // Called whenever a property is retrieved from this instance. The id
         // is the same as the index of the property in the PROPERTIES array.
-        fn property(&self, _obj: &Self::Type, _id: usize, pspec: &glib::ParamSpec) -> glib::Value {
+        fn property(&self, _id: usize, pspec: &glib::ParamSpec) -> glib::Value {
             match pspec.name() {
                 _ => unimplemented!(),
             }
         }
 
         // Called right after construction of the instance.
-        fn constructed(&self, obj: &Self::Type) {
+        fn constructed(&self) {
             // Chain up to the parent type's implementation of this virtual
             // method.
-            self.parent_constructed(obj);
+            self.parent_constructed();
 
             // And here we could do our own initialization.
         }
@@ -72,7 +72,7 @@ glib::wrapper! {
 impl SimpleObject {
     // Create an object instance of the new type.
     pub fn new() -> Self {
-        glib::Object::new(&[]).unwrap()
+        glib::Object::new(&[])
     }
 }
 
