@@ -57,21 +57,21 @@ if __name__ == "__main__":
 
     run(cargo_cmd, env)
 
-    if opts.command == 'build':
-        target_dir = cargo_target_dir / '**' / opts.build_type
 
-        # Copy so files to build dir
-        depfile_content = ""
-        for ext in opts.exts:
-            for f in glob.glob(str(target_dir / f'*.{ext}'), recursive=True):
-                libfile = P(f)
-                with open(libfile.parent / (libfile.stem + '.d'), 'r') as libdepfile:
-                    content = libdepfile.read()
-                    # Write our own depfile
-                    content = content.replace(f"{str(libfile)}:",
-                                              f"{str(opts.build_dir / libfile.name)}:")
-                    depfile_content += f"{content}\n"
-                shutil.copy(f, opts.build_dir)
+    target_dir = cargo_target_dir / '**' / opts.build_type
+
+    # Copy so files to build dir
+    depfile_content = ""
+    for ext in opts.exts:
+        for f in glob.glob(str(target_dir / f'*.{ext}'), recursive=True):
+            libfile = P(f)
+            with open(libfile.parent / (libfile.stem + '.d'), 'r') as libdepfile:
+                content = libdepfile.read()
+                # Write our own depfile
+                content = content.replace(f"{str(libfile)}:",
+                                          f"{str(opts.build_dir / libfile.name)}:")
+                depfile_content += f"{content}\n"
+            shutil.copy(f, opts.build_dir)
 
         with open(opts.depfile, 'w') as depfile:
             depfile.write(depfile_content)
