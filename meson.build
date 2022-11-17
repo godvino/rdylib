@@ -15,7 +15,7 @@ pkgconfig = import('pkgconfig')
 cargo = find_program('cargo', version:'>=1.40')
 rustc = find_program('rustc', version:'>=1.52')
 
-gobject_dep = dependency('gobject-2.0')
+gio_dep = dependency('gio-2.0')
 
 output = []
 
@@ -57,7 +57,7 @@ lib = library('rdylib',
   link_whole: rdylib_lib,
   install: true,
    dependencies: [
-     gobject_dep,
+     gio_dep,
    ],
   )
 
