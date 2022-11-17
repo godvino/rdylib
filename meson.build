@@ -39,20 +39,12 @@ rdylib_lib = custom_target('rdylib.tmp',
   build_always_stale: true,
   output: output,
   console: true,
-  #install: true,
-  install_dir: get_option('libdir'),
-  #depends: depends,
   depfile: 'rdylib.dep',
   command: [cargo_wrapper,
-    'build',
   '--build-dir', meson.current_build_dir(),
   '--source-dir', meson.current_source_dir(),
-  '--include-directories', 'rdylib',
   '--root-dir', meson.global_build_root(),
   '--build-type', target,
-  '--prefix', get_option('prefix'),
-  '--libdir', get_option('libdir'),
-  '--local-include-dir', 'include',
   '--depfile', '@DEPFILE@',
   '--exts', extension,
   '--buildtype', buildtype
@@ -60,8 +52,6 @@ rdylib_lib = custom_target('rdylib.tmp',
 
 install_headers('include/rdylib.h', subdir: 'rdylib')
 rdylibinc = include_directories('include')
-
-cc = meson.get_compiler('c')
 
 lib = library('rdylib',
   link_whole: rdylib_lib,
