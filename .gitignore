@@ -1,1 +1,4 @@
 /.buildconfig
+/target
+/subprojects/*
+!/subprojects/*.wrap

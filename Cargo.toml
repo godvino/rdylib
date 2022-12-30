@@ -5,19 +5,12 @@ edition = "2021"
 
 [lib]
 name         = "rdylib"
-crate-type   = ["rlib", "staticlib"]
+crate-type   = ["lib", "staticlib"]
 
 [profile.release]
 strip = true
 lto = true
 #panic = "abort"
-
-#[features]
-#capi=[]
-#staticlib=[]
-
-#[package.metadata.capi.header]
-#enabled = false
 
 [dependencies]
 glib = "0.16.3"

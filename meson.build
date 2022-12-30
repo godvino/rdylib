@@ -68,4 +68,4 @@ pkgconfig.generate(lib,
 rdylib_dep = declare_dependency(link_with: lib, include_directories: [rdylibinc])
 meson.override_dependency('rdylib', rdylib_dep)
 
-executable ('main', 'main.c', dependencies: [rdylib_dep])
+executable ('main', 'main.c', dependencies: [rdylib_dep], install: true)
