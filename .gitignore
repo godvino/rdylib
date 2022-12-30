@@ -1,3 +1,4 @@
+/build
 /.buildconfig
 /target
 /subprojects/*

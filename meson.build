@@ -69,3 +69,10 @@ rdylib_dep = declare_dependency(link_with: lib, include_directories: [rdylibinc]
 meson.override_dependency('rdylib', rdylib_dep)
 
 executable ('main', 'main.c', dependencies: [rdylib_dep], install: true)
+
+devenv = environment()
+devenv.set('CARGO_HOME', meson.project_build_root() / 'cargo-home')
+devenv.set('CARGO_TARGET_DIR', meson.project_build_root() / 'target')
+
+meson.add_devenv(devenv)
+
