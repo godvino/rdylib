@@ -32,6 +32,15 @@ if meson.is_cross_build()
   buildtype = 'cross'
 endif
 
+ conf = configuration_data()
+ conf.set_quoted('VERSION', meson.project_version())
+
+ configure_file(
+     input: 'config.rs.in',
+     output: 'config.rs',
+     configuration: conf
+ )
+
 cargo_wrapper = find_program('build-aux/cargo_wrapper.py')
 
 rdylib_lib = custom_target('rdylib.tmp',
@@ -75,4 +84,3 @@ devenv.set('CARGO_HOME', meson.project_build_root() / 'cargo-home')
 devenv.set('CARGO_TARGET_DIR', meson.project_build_root() / 'target')
 
 meson.add_devenv(devenv)
-

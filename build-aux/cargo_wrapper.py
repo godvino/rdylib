@@ -28,6 +28,7 @@ if __name__ == "__main__":
     cargo_target_dir = opts.build_dir / 'target'
 
     env = os.environ.copy()
+    env['INCLUDE_DIR'] = str(f'{opts.build_dir}{os.sep}')
     env['CARGO_TARGET_DIR'] = str(cargo_target_dir)
 
     pkg_config_path = env.get('PKG_CONFIG_PATH', '').split(':')

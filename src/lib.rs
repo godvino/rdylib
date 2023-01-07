@@ -1,3 +1,4 @@
+include!(concat!(env!("INCLUDE_DIR"), "config.rs"));
 use glib::subclass::prelude::*;
 use glib::subclass::InitializingObject;
 
@@ -81,4 +82,5 @@ impl SimpleObject {
 pub extern "C" fn print_hello() {
     SimpleObject::new();
     println!("Hello");
+    println!("{}", VERSION);
 }
