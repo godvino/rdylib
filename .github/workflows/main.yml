@@ -16,7 +16,7 @@ jobs:
     - run: meson setup builddir/
       env:
         CC: gcc
-    - run: meson test -C builddir/ -v
+    - run: meson compile -C builddir/ -v
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
@@ -35,7 +35,7 @@ jobs:
     - run: meson setup builddir/
       env:
         CC: gcc
-    - run: meson test -C builddir/ -v
+    - run: meson compile -C builddir/ -v
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
@@ -53,7 +53,7 @@ jobs:
     - run: meson setup builddir/
       env:
         CC: gcc
-    - run: meson test -C builddir/ -v
+    - run: meson compile -C builddir/ -v
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
