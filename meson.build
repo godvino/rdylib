@@ -22,7 +22,7 @@ extension = 'a'
 #  extension = 'lib'
 #endif
 
-output += ['lib' + meson.project_name() + '.' + extension]
+output = ['lib' + meson.project_name() + '.' + extension]
 
 buildtype = 'native'
 if meson.is_cross_build()
