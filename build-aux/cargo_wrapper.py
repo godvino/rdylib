@@ -22,7 +22,9 @@ PARSER.add_argument('--buildtype')
 if __name__ == "__main__":
     opts = PARSER.parse_args()
 
-    logfile = open(opts.root_dir / 'meson-logs' / f'{opts.source_dir.name}-cargo-wrapper.log', 'w')
+    logdir = opts.root_dir / 'meson-logs'
+    logfile_path = logdir / f'{opts.src_dir.name}-cargo-wrapper.log'
+    logfile = open(logfile_path, mode='w', buffering=1)
 
     print(opts, file=logfile)
     cargo_target_dir = opts.build_dir / 'target'
@@ -31,14 +33,14 @@ if __name__ == "__main__":
     env['INCLUDE_DIR'] = str(f'{opts.build_dir}{os.sep}')
     env['CARGO_TARGET_DIR'] = str(cargo_target_dir)
 
-    pkg_config_path = env.get('PKG_CONFIG_PATH', '').split(':')
+    pkg_config_path = env.get('PKG_CONFIG_PATH', '').split(os.pathsep)
     pkg_config_path.append(str(opts.root_dir / 'meson-uninstalled'))
-    env['PKG_CONFIG_PATH'] = ':'.join(pkg_config_path)
+    env['PKG_CONFIG_PATH'] = os.pathsep.join(pkg_config_path)
 
     env['CARGO_HOME'] = str(opts.build_dir / 'cargo-home')
 
     for e in opts.extra_env_vars:
-        k, v = e.split(':')
+        k, v = e.split(os.pathsep)
         env[k] = v
 
     if  opts.buildtype == 'cross':
