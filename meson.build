@@ -18,10 +18,10 @@ gio_dep = dependency('gio-2.0')
 
 system = host_machine.system()
 extension = 'a'
-output += ['lib' + meson.project_name() + '.' + extension]
+output = 'lib' + meson.project_name() + '.' + extension
 if system == 'windows'
   extension = 'lib'
-  output += [meson.project_name() + '.' + extension]
+  output = meson.project_name() + '.' + extension
 endif
 
 buildtype = 'native'
