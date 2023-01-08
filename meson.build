@@ -21,9 +21,9 @@ output = []
 
 system = build_machine.system()
 extension = 'a'
-if system == 'windows'
-  extension = 'lib'
-endif
+#if system == 'windows'
+#  extension = 'lib'
+#endif
 
 output += ['lib' + meson.project_name() + '.' + extension]
 
