@@ -57,7 +57,7 @@ rdylib_lib = custom_target('rdylib.tmp',
 install_headers('include/rdylib.h', subdir: 'rdylib')
 rdylibinc = include_directories('include')
 
-lib = library('rdylib',
+lib = shared_library('rdylib',
   link_whole: rdylib_lib,
   install: true,
    dependencies: [
