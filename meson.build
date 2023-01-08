@@ -18,11 +18,11 @@ gio_dep = dependency('gio-2.0')
 
 output = []
 
-system = build_machine.system()
+system = host_machine.system()
 extension = 'a'
-if system == 'windows'
-  extension = 'lib'
-endif
+#if system == 'windows'
+#  extension = 'lib'
+#endif
 
 output += ['lib' + meson.project_name() + '.' + extension]
 
