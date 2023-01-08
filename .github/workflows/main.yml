@@ -70,7 +70,7 @@ jobs:
         pkg-config --version
 
     - run: pip install meson ninja
-    - run: meson setup builddir/
+    - run: meson setup builddir/ -Ddefault_library=static
 
     - run: meson compile -C builddir/ -v && ls -R builddir
     - uses: actions/upload-artifact@v1
