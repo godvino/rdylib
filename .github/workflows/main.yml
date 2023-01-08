@@ -71,6 +71,9 @@ jobs:
 
     - run: pip install meson ninja
     - run: meson setup builddir/ -Ddefault_library=static
+      env:
+        CC: clang-cl
+        CC_LD: lld-link
 
     - run: meson compile -C builddir/ -v && ls -R builddir
     - uses: actions/upload-artifact@v1
