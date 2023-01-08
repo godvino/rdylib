@@ -16,15 +16,13 @@ rustc = find_program('rustc', version:'>=1.52')
 
 gio_dep = dependency('gio-2.0')
 
-output = []
-
 system = host_machine.system()
 extension = 'a'
-#if system == 'windows'
-#  extension = 'lib'
-#endif
-
 output += ['lib' + meson.project_name() + '.' + extension]
+if system == 'windows'
+  extension = 'lib'
+  output += [meson.project_name() + '.' + extension]
+endif
 
 buildtype = 'native'
 if meson.is_cross_build()
