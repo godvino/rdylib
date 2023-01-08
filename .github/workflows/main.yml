@@ -52,6 +52,7 @@ jobs:
       with:
         profile: minimal
         toolchain: nightly
+        default: true
         
     - name: Set up the PATH environment
       run: |
