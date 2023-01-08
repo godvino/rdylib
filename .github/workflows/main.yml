@@ -66,8 +66,7 @@ jobs:
     - run: pip install meson ninja
     - run: meson setup builddir/
 
-    - run: meson compile -C builddir/ -v
-    - run: ls -R builddir
+    - run: meson compile -C builddir/ -v && ls -R builddir
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
