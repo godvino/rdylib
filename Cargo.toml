@@ -13,4 +13,4 @@ lto = true
 #panic = "abort"
 
 [dependencies]
-glib = "0.16.3"
+glib = "0.17.4"
